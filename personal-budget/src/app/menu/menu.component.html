@@ -1,0 +1,12 @@
+<!-- Semantic HTML Change 1: Header -->
+    <header>
+      <nav>
+          <ul>
+              
+              <!-- A11y Change 1: Indicate current page -->
+              <li><a [routerLink]="['./']" aria-current="page">Home</a></li>
+              <li><a [routerLink]="['/about']">About</a></li>
+              <li><a [routerLink]="['./login.html']">Login</a></li>
+          </ul>
+      </nav>
+    </header>

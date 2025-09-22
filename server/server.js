@@ -7,7 +7,8 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
-app.use('/', express.static('public'));
+//Below line not needed for API-only server as CORS is enabled
+//app.use('/', express.static('public'));
 
 const budgetData = require(path.join(__dirname, 'budgetdata.json'));
 
