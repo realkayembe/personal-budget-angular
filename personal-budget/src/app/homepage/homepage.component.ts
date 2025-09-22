@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { ArticlesComponent } from '../articles/articles.component';
 import { HttpClient } from '@angular/common/http';
 import { Chart, ArcElement, Tooltip, Legend, PieController } from 'chart.js';
+import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
 Chart.register(PieController, ArcElement, Tooltip, Legend);
 
 
 @Component({
   selector: 'pb-homepage',
   standalone: true,
-  imports: [ArticlesComponent],
+  imports: [ArticlesComponent, BreadcrumbsComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss'
 })
