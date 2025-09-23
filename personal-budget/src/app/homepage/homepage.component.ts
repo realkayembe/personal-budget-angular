@@ -6,6 +6,7 @@ import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
 Chart.register(PieController, ArcElement, Tooltip, Legend);
 
 import * as d3 from 'd3';
+import { BudgetItem, DataService } from '../data.service';
 
 @Component({
   selector: 'pb-homepage',
@@ -32,27 +33,22 @@ export class HomepageComponent {
 
   private chart: Chart | null = null; 
   myBudget = [];
-  domainLabels:any = [];   
 
-  constructor(private http: HttpClient) {}
+  constructor(private dataService: DataService) {}
 
   ngAfterViewInit(): void {
-    this.http.get('http://localhost:3000/budget').subscribe({
-      next: (data: any) => {
-        console.log('Budget data:', data);
-        this.myBudget = data.myBudget;
+  this.dataService.loadBudget().subscribe({
+    next: (myBudget: BudgetItem[]) => {
+      this.dataSource.datasets[0].data = myBudget.map(item => item.budget);
+      this.dataSource.labels = myBudget.map(item => item.title);
 
-        this.domainLabels = data.myBudget.map((item: any) => item.title);
-        this.dataSource.datasets[0].data = data.myBudget.map((item: any) => item.budget);
-        this.dataSource.labels = data.myBudget.map((item: any) => item.title);
-        this.createChart();
-        this.createD3Chart(this.myBudget);  
-      },
-      error: (err) => {
-        console.error('Error fetching budget data', err);
-      }
-    });
-  }
+      this.createChart();
+      this.createD3Chart(myBudget);
+    },
+    error: (err) => console.error('Error fetching budget data', err)
+  });
+}
+
 
   createChart() {
             const canvas = document.getElementById('myChart') as HTMLCanvasElement;
